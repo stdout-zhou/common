@@ -1,0 +1,4 @@
+.vscode
+experimental/cxx_template/build
+experimental/cxx_template/main.exe
+experimental/cxx_template/test.cc
