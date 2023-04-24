@@ -1,0 +1,3 @@
+D:/work/.subrepos/common/experimental/cxx_template/build/CMakeFiles/tuple_test.dir
+D:/work/.subrepos/common/experimental/cxx_template/build/CMakeFiles/edit_cache.dir
+D:/work/.subrepos/common/experimental/cxx_template/build/CMakeFiles/rebuild_cache.dir
