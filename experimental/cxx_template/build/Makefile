@@ -128,6 +128,43 @@ tuple_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\tuple_test.dir\build.make CMakeFiles/tuple_test.dir/build
 .PHONY : tuple_test/fast
 
+#=============================================================================
+# Target rules for targets named thread_pool_test
+
+# Build rule for target.
+thread_pool_test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 thread_pool_test
+.PHONY : thread_pool_test
+
+# fast build rule for target.
+thread_pool_test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\thread_pool_test.dir\build.make CMakeFiles/thread_pool_test.dir/build
+.PHONY : thread_pool_test/fast
+
+thread_pool_test.obj: thread_pool_test.cc.obj
+.PHONY : thread_pool_test.obj
+
+# target to build an object file
+thread_pool_test.cc.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\thread_pool_test.dir\build.make CMakeFiles/thread_pool_test.dir/thread_pool_test.cc.obj
+.PHONY : thread_pool_test.cc.obj
+
+thread_pool_test.i: thread_pool_test.cc.i
+.PHONY : thread_pool_test.i
+
+# target to preprocess a source file
+thread_pool_test.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\thread_pool_test.dir\build.make CMakeFiles/thread_pool_test.dir/thread_pool_test.cc.i
+.PHONY : thread_pool_test.cc.i
+
+thread_pool_test.s: thread_pool_test.cc.s
+.PHONY : thread_pool_test.s
+
+# target to generate assembly for a file
+thread_pool_test.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\thread_pool_test.dir\build.make CMakeFiles/thread_pool_test.dir/thread_pool_test.cc.s
+.PHONY : thread_pool_test.cc.s
+
 tuple_test.obj: tuple_test.cc.obj
 .PHONY : tuple_test.obj
 
@@ -160,7 +197,11 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... thread_pool_test
 	@echo ... tuple_test
+	@echo ... thread_pool_test.obj
+	@echo ... thread_pool_test.i
+	@echo ... thread_pool_test.s
 	@echo ... tuple_test.obj
 	@echo ... tuple_test.i
 	@echo ... tuple_test.s
