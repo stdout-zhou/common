@@ -1,15 +1,20 @@
 /*
-v1版本的线程池，只能支持提交std::function<void()>的任务，待补充...
+线程池，可以提交任意的工作函数，并且支持异步的查询结果。
+实现思路：
+  普通版本的线程池 + std::future + 不定参数模板
 */
 
 #pragma once
 
 #include <condition_variable>
 #include <functional>
+#include <future>
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <vector>
+
+#include <iostream>
 
 namespace stdout_cxx_template {
 
@@ -27,7 +32,8 @@ public:
     stop_ = false;
   }
 
-  void SubmitTask(Task task);
+  template <typename Functor, typename... Args>
+  auto SubmitTask(Functor&& functor, Args&&... args) -> std::future<decltype(functor(args...))>;
 
   void Stop();
 private:
@@ -66,12 +72,27 @@ void ThreadPool::Work() {
   }
 }
 
-void ThreadPool::SubmitTask(ThreadPool::Task task) {
+template <typename Functor, typename... Args>
+auto ThreadPool::SubmitTask(Functor&& functor, Args&&... args) -> std::future<decltype(functor(args...))> {
+  using ReturnType = decltype(functor(args...));
+  // std::packaged_task<ReturnType()> async_task(std::bind(std::forward<Functor>(functor), std::forward<Args>(args)...));
+  //std::packaged_task只能移动不能拷贝
+  auto async_task = std::make_shared<std::packaged_task<ReturnType()>>(
+      std::bind(std::forward<Functor>(functor), std::forward<Args>(args)...)
+  ); 
+  
+  std::future<ReturnType> future_result = async_task->get_future();
+
   {
     std::unique_lock<std::mutex> lk(mx_);
-    task_queue_.push(task);
+    task_queue_.push([async_task](){
+      (*async_task)();
+    });
   }
+
   cv_.notify_one();
+
+  return future_result;
 }
 
 void ThreadPool::Stop() {
